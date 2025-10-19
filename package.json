@@ -8,7 +8,9 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "deploy:web": "bunx expo export:web && vc --prod --archive=tgz",
+    "deploy:web:preview": "bunx expo export:web && vc --archive=tgz"
   },
   "dependencies": {
     "@bacons/apple-colors": "^0.0.8",
@@ -61,10 +63,11 @@
     "react-native-worklets": "0.5.1"
   },
   "devDependencies": {
+    "@expo/webpack-config": "^19.0.1",
     "@types/react": "~19.1.0",
-    "typescript": "~5.9.2",
     "eslint": "^9.25.0",
-    "eslint-config-expo": "~10.0.0"
+    "eslint-config-expo": "~10.0.0",
+    "typescript": "~5.9.2"
   },
   "private": true
 }

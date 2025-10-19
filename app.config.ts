@@ -10,7 +10,9 @@ const config: ExpoConfig = {
   userInterfaceStyle: "automatic",
   newArchEnabled: true,
   extra: {
-    eas: {},
+    eas: {
+      projectId: "186f41e1-595a-497e-8ce6-f0481420e9f6",
+    },
   },
   ios: {
     supportsTablet: true,
@@ -35,7 +37,7 @@ const config: ExpoConfig = {
   web: {
     output: "static",
     favicon: "./assets/images/favicon.png",
-    bundler: "metro",
+    bundler: "webpack",
   },
   plugins: [
     [

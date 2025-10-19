@@ -2,19 +2,10 @@ import { useAppNavigation } from "@src/hooks/useAppNavigation";
 import { AppStackScreenProps } from "@src/navigators/AppNavigator";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
-import { osName } from "expo-device";
 import { Image } from "expo-image";
-import { Stack, useIsPreview } from "expo-router";
 import { lazy, Suspense } from "react";
-import {
-  ActivityIndicator,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  View,
-} from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet, View } from "react-native";
 import { AuthorDetails } from "../components/AuthorDetails";
-import { HeaderButton } from "../components/HeaderButton/HeaderButton";
 import { ThemedText, ThemedView } from "../components/Themed";
 import { blogService } from "../services/blog-service";
 import imageService from "../services/image-service";
@@ -36,7 +27,6 @@ const PortableText = lazy(() =>
 // }
 
 export default function BlogScreen({ route }: AppStackScreenProps<"Article">) {
-  const isPreview = useIsPreview();
   const navigate = useAppNavigation();
 
   const borderColor = theme.color.border.dark;
@@ -53,24 +43,6 @@ export default function BlogScreen({ route }: AppStackScreenProps<"Article">) {
 
   return (
     <>
-      {!isPreview && (
-        <Stack.Screen
-          options={{
-            title: "",
-            headerLeft: () =>
-              Platform.select({
-                ios: (
-                  <HeaderButton
-                    buttonProps={{ onPress: navigate.goBack }}
-                    style={{ padding: osName === "iPadOS" ? 40 : 0 }}
-                  />
-                ),
-                default: undefined,
-              }),
-          }}
-        />
-      )}
-
       <ThemedView
         style={styles.container}
         color={{

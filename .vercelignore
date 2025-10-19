@@ -1,0 +1,33 @@
+# Dependencies
+node_modules
+bun.lock
+package-lock.json
+yarn.lock
+
+# Build outputs (except web-build)
+dist
+.expo
+.expo-shared
+
+# Native builds
+ios
+android
+
+# Development
+.vscode
+.idea
+*.log
+.DS_Store
+
+# Testing
+coverage
+.nyc_output
+
+# Environment
+.env.local
+.env.*.local
+
+# Git
+.git
+.gitignore
+

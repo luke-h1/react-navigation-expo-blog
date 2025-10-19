@@ -5,7 +5,6 @@ import { PostWithAuthor } from "@src/services/blog-service";
 import { theme } from "@src/theme";
 import { format } from "date-fns";
 import * as Haptics from "expo-haptics";
-import { useRouter } from "expo-router";
 import { useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
@@ -19,9 +18,10 @@ interface Props {
 }
 
 export function PostCard({ post }: Props) {
-  const router = useRouter();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const navigate = useAppNavigation();
+
+  const appNavigation = useAppNavigation();
 
   const gesturePostTap = useMemo(
     () =>

@@ -1,7 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { osName } from "expo-device";
 import { AuthorImage } from "../components/AuthorImage";
-import { HeaderButton } from "../components/HeaderButton/HeaderButton";
 import { ThemedText, ThemedView } from "../components/Themed";
 import { blogService } from "../services/blog-service";
 import imageService from "../services/image-service";
@@ -9,15 +7,8 @@ import { theme } from "../theme";
 
 import { useAppNavigation } from "@src/hooks/useAppNavigation";
 import { AppStackScreenProps } from "@src/navigators/AppNavigator";
-import { Stack, useIsPreview } from "expo-router";
 import { lazy, Suspense } from "react";
-import {
-  ActivityIndicator,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  View,
-} from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet, View } from "react-native";
 
 const PortableText = lazy(() =>
   import("@portabletext/react-native").then((module) => ({
@@ -35,8 +26,6 @@ const PortableText = lazy(() =>
 // }
 
 export default function AuthorScreen({ route }: AppStackScreenProps<"Author">) {
-  const isPreview = useIsPreview();
-
   const navigate = useAppNavigation();
   const borderColor = theme.color.border.dark;
   const backgroundColorSecondary = theme.color.backgroundSecondary.dark;
@@ -48,31 +37,11 @@ export default function AuthorScreen({ route }: AppStackScreenProps<"Author">) {
 
   return (
     <>
-      {!isPreview && (
-        <Stack.Screen
-          options={{
-            title: "",
-            headerLeft: () =>
-              Platform.select({
-                ios: (
-                  <HeaderButton
-                    buttonProps={{ onPress: navigate.goBack }}
-                    style={{ padding: osName === "iPadOS" ? 40 : 0 }}
-                  />
-                ),
-                default: undefined,
-              }),
-          }}
-        />
-      )}
-
       <ThemedView
         style={styles.container}
         color={{
           light: theme.color.background.light,
-          dark: isPreview
-            ? backgroundColorSecondary
-            : theme.color.background.dark,
+          dark: theme.color.background.dark,
         }}
       >
         {author ? (
@@ -80,8 +49,8 @@ export default function AuthorScreen({ route }: AppStackScreenProps<"Author">) {
             style={styles.container}
             contentContainerStyle={[
               styles.contentContainer,
-              isPreview && styles.previewContent,
-              isPreview && { borderColor },
+              styles.previewContent,
+              { borderColor },
             ]}
             contentInsetAdjustmentBehavior="automatic"
             showsVerticalScrollIndicator={false}
@@ -92,28 +61,23 @@ export default function AuthorScreen({ route }: AppStackScreenProps<"Author">) {
                 profilePicture={imageService.urlFor(
                   author.image?.asset?.url as string,
                   {
-                    width: isPreview ? 120 : 192,
-                    height: isPreview ? 120 : 192,
+                    width: 192,
+                    height: 192,
                   }
                 )}
-                size={isPreview ? "medium" : "large"}
+                size={"large"}
                 authorName={author.name}
               />
               <ThemedText
-                fontSize={isPreview ? theme.fontSize16 : theme.fontSize18}
+                fontSize={theme.fontSize18}
                 fontWeight="medium"
-                numberOfLines={isPreview ? 2 : undefined}
+                numberOfLines={2}
                 style={styles.authorName}
               >
                 {author.name}
               </ThemedText>
-              {!isPreview && (
-                <View
-                  style={[styles.separator, { borderBottomColor: borderColor }]}
-                />
-              )}
             </View>
-            {author.bio && !isPreview ? (
+            {author.bio ? (
               <Suspense
                 fallback={
                   <View style={{ padding: theme.space16 }}>
@@ -258,7 +222,7 @@ export default function AuthorScreen({ route }: AppStackScreenProps<"Author">) {
                 />
               </Suspense>
             ) : null}
-            {author.bio && isPreview ? (
+            {author.bio ? (
               <Suspense fallback={null}>
                 <ThemedText
                   fontSize={theme.fontSize12}

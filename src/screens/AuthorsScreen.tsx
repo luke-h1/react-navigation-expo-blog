@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import Head from "expo-router/head";
 import { useCallback } from "react";
 import {
   FlatList,
@@ -85,13 +84,13 @@ export default function AuthorScreen() {
 
   return (
     <>
-      <Head>
+      {/* <Head>
         <title>Authors | Expo Router Blog</title>
         <meta
           name="description"
           content="Browse all authors and contributors on Expo Router Blog. Discover their profiles, bios, and published articles."
         />
-      </Head>
+      </Head> */}
       <FlatList
         data={data}
         style={{ backgroundColor }}
